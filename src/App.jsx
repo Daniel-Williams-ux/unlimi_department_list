@@ -1,21 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Header from './components/Header';
 import ProductTable from './components/ProductTable';
+import { useApi } from './components/ApiContext';
 
 const App = () => {
-  const [productData, setProductData] = useState([]);
-  // Fetch data from API and set it to productData
-
-  useEffect(() => {
-    // Fetch data from API and update productData
-    // Example: fetchProducts().then((data) => setProductData(data));
-  }, []);
+  const { products, error } = useApi();
 
   return (
     <div className="container mx-auto">
       <Header />
-      
-      <ProductTable products={productData} />
+      {error ? (
+        <div className="error-message">
+          <p>Failed to load products. Please try again later.</p>
+        </div>
+      ) : (
+        <ProductTable products={products} />
+      )}
     </div>
   );
 };
